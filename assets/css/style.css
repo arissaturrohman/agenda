@@ -1,0 +1,127 @@
+img {
+  margin: -10px 0 0 0;
+}
+
+.jumbotron .judul {
+  margin: 0 auto;
+}
+
+.jumbotron .opd {
+  margin: 0 auto;
+}
+
+.jumbotron .almt {
+  margin: 0 auto;
+}
+
+/* .jumbotron {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  height: 100%;
+} */
+
+.container {
+  position: relative;
+  min-height: 100%
+}
+
+.news {
+  margin: 0 auto;
+  padding: 0 0 0 5px;
+  height: 30px;
+  line-height: 25px;
+  float: left;
+  text-align: left;
+  border: #1abc9c 1px solid;
+  position: relative;
+  overflow: hidden;
+  background-color:#1abc9c;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.berita {
+  margin: 0 auto;
+  padding: 0 0 0 10px;
+  height: 30px;
+  line-height: 25px;
+  text-align: left;
+  float: right;
+  border: #1abc9c 1px solid;
+  overflow: hidden;
+  background-color:#ffffff;
+  font-size: 20px;
+}
+
+
+.footer {
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background: #555;
+    color: #fff;
+    position: absolute;
+    bottom: 0px;
+}
+
+@media screen and (max-width: 960px) {
+  .news {
+    margin: 0 auto;
+    padding: 0 0 0 5px;
+    height: 30px;
+    width: 200px;;
+    line-height: 25px;
+    float: left;
+    text-align: center;
+    border: #1abc9c 1px solid;
+    position: relative;
+    overflow: hidden;
+    background-color:#1abc9c;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .berita {
+    margin: 0 auto;
+    padding: 0px;
+    height: 30px;
+    width: 550px;
+    line-height: 25px;
+    text-align: center;
+    float: right;
+    border: #1abc9c 1px solid;
+    overflow: hidden;
+    background-color:#ffffff;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .news {
+    margin: 0 auto;
+    padding: 0 0 0 5px;
+    height: 30px;
+    width: 360px;
+    line-height: 25px;
+    float: left;
+    text-align: center;
+    border: #1abc9c 1px solid;
+    position: relative;
+    overflow: hidden;
+    background-color:#1abc9c;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  .berita {
+    margin: 0 auto;
+    padding: 0 0 0 10px;
+    height: 30px;
+    width: 360px;
+    line-height: 25px;
+    text-align: left;
+    float: right;
+    border: #1abc9c 1px solid;
+    overflow: hidden;
+    background-color:#ffffff;
+    font-size: 15px;
+  }
+}
