@@ -1,13 +1,13 @@
 ﻿<?php
 session_start();
-if(!isset($_SESSION["login"])){
+if (!isset($_SESSION["login"])) {
   header("Location: login.php");
   exit;
 }
 
 include('../admin/config.php');
 include('tgl_indo.php');
-error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
+error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 
 ?>
 <!DOCTYPE html>
@@ -79,17 +79,17 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
       </li>
 
       <!-- Divider -->
-      <!-- <hr class="sidebar-divider">
+      <hr class="sidebar-divider">
 
       <div class="sidebar-heading">
-        NEWS
+        Pegawai
       </div>
 
       <li class="nav-item">
         <a class="nav-link" href="?page=pegawai">
           <i class="fas fa-fw fa-users"></i>
           <span>Pegawai</span></a>
-      </li> -->
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -136,13 +136,13 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
             <li class="nav-item dropdown no-arrow">
               <?php
               $sql = $conn->query("SELECT * FROM tb_user");
-              while ($data=$sql->fetch_assoc()){
+              while ($data = $sql->fetch_assoc()) {
 
               ?>
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $data['nama']; ?></span>
-                <img class="img-profile rounded-circle" src="../img/logo.png">
-              </a>
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $data['nama']; ?></span>
+                  <img class="img-profile rounded-circle" src="../img/logo.png">
+                </a>
               <?php } ?>
 
               <!-- Dropdown - User Information -->
@@ -173,53 +173,43 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
 
           <!-- Page Heading -->
           <?php
-            $page = $_GET['page'];
-            $aksi = $_GET['aksi'];
+          $page = $_GET['page'];
+          $aksi = $_GET['aksi'];
 
-            if ($page == "agenda") {
-              if ($aksi == "") {
-                include "../admin/agenda/agenda.php";
-              }elseif ($aksi== "tambah") {
-                include "../admin/agenda/tambah.php";
-              }
-              elseif ($aksi== "edit") {
-                include "../admin/agenda/edit.php";
-              }
-              elseif ($aksi== "hapus") {
-                include "../admin/agenda/hapus.php";
-              }
+          if ($page == "agenda") {
+            if ($aksi == "") {
+              include "../admin/agenda/agenda.php";
+            } elseif ($aksi == "tambah") {
+              include "../admin/agenda/tambah.php";
+            } elseif ($aksi == "edit") {
+              include "../admin/agenda/edit.php";
+            } elseif ($aksi == "hapus") {
+              include "../admin/agenda/hapus.php";
             }
-            elseif ($page == "pegawai") {
-              if ($aksi == "") {
-                include "../admin/pegawai/pegawai.php";
-              }
-              elseif ($aksi== "tambah") {
-                include "../admin/pegawai/tambah.php";
-              }
-              elseif ($aksi== "edit") {
-                include "../admin/pegawai/edit.php";
-              }
-              elseif ($aksi== "hapus") {
-                include "../admin/pegawai/hapus.php";
-              }
+          } elseif ($page == "pegawai") {
+            if ($aksi == "") {
+              include "../admin/pegawai/pegawai.php";
+            } elseif ($aksi == "tambah") {
+              include "../admin/pegawai/tambah.php";
+            } elseif ($aksi == "edit") {
+              include "../admin/pegawai/edit.php";
+            } elseif ($aksi == "hapus") {
+              include "../admin/pegawai/hapus.php";
             }
-            elseif ($page == "setting") {
-              if ($aksi == "") {
-                include "../admin/setting/setting.php";
-              }
-              elseif ($aksi== "edit") {
-                include "../admin/setting/s_edit.php";
-              }
+          } elseif ($page == "setting") {
+            if ($aksi == "") {
+              include "../admin/setting/setting.php";
+            } elseif ($aksi == "edit") {
+              include "../admin/setting/s_edit.php";
             }
-            elseif ($page == "instansi") {
-              if ($aksi == "") {
-                include "../admin/setting/profil.php";
-              }
+          } elseif ($page == "instansi") {
+            if ($aksi == "") {
+              include "../admin/setting/profil.php";
             }
-              elseif ($page == "") {
-                include "../admin/dashboard.php";
-            }
-            ?>
+          } elseif ($page == "") {
+            include "../admin/dashboard.php";
+          }
+          ?>
 
         </div>
         <!-- /.container-fluid -->
@@ -232,28 +222,28 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
       <?php
 
       $sql = $conn->query("SELECT * FROM tb_user");
-      while ($data=$sql->fetch_assoc()){
+      while ($data = $sql->fetch_assoc()) {
 
 
-       ?>
-       <?php $tahun = date('Y'); ?>
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyleft &copy; <?php echo $data['opd']; ?> <?php echo $tahun; ?></span>
+      ?>
+        <?php $tahun = date('Y'); ?>
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyleft &copy; <?php echo $data['opd']; ?> <?php echo $tahun; ?></span>
+            </div>
           </div>
-        </div>
-      </footer>
-    <?php } ?>
+        </footer>
+      <?php } ?>
       <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
 
   </div>
-      <!-- End of Main Content -->
+  <!-- End of Main Content -->
 
-      
+
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -296,23 +286,23 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
 
           <?php
           $sql = $conn->query("SELECT * FROM tb_user");
-          while ($data=$sql->fetch_assoc()){
+          while ($data = $sql->fetch_assoc()) {
 
-           ?>
-           <div class="container">
+          ?>
+            <div class="container">
 
-           <div class="row">
-             <div class="col-md-6 offset-md-3 text-center">
-                <span><img src="../img/logo.png" width="80" height="100"></span><br>
-                <span class="text-center"><strong><?php echo $data['opd']; ?></strong></span><br>
-                <span class="text-center"> <small> <?php echo $data['alamat']; ?> </small> </span><br>
-                <span class="text-center"> <small> <?php echo $data['telp']; ?> </small> </span><br>
+              <div class="row">
+                <div class="col-md-6 offset-md-3 text-center">
+                  <span><img src="../img/logo.png" width="80" height="100"></span><br>
+                  <span class="text-center"><strong><?php echo $data['opd']; ?></strong></span><br>
+                  <span class="text-center"> <small> <?php echo $data['alamat']; ?> </small> </span><br>
+                  <span class="text-center"> <small> <?php echo $data['telp']; ?> </small> </span><br>
+                </div>
+              </div>
+              <div class="row">
+
               </div>
             </div>
-            <div class="row">
-
-            </div>
-          </div>
           <?php } ?>
 
 
@@ -340,12 +330,12 @@ error_reporting(E_ALL ^(E_NOTICE | E_WARNING));
   <script src="../assets/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="../assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
   <script>
-  $(document).ready( function () {
-  $('#myTable').dataTable();
-} );
+    $(document).ready(function() {
+      $('#myTable').dataTable();
+    });
   </script>
 
-  
+
 
   <!-- Page level custom scripts -->
   <script src="../assets/js/demo/datatables-demo.js"></script>

@@ -1,12 +1,8 @@
 <?php
 
 $host = "localhost";
-$user = "agendakec";
-$pass = "qwerty123";
-$dbname = "db_agendakec";
+$user = "root";
+$pass = "";
+$dbname = "db_agenda";
 
 $conn = mysqli_connect("$host","$user","$pass","$dbname");
-
-
-
- ?>

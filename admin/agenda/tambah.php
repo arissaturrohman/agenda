@@ -6,48 +6,79 @@
   <!-- DataTales Example -->
   <div class="card shadow">
     <div class="card-body">
-      <form method="POST" >
-        <div class="form-group">
-          <label >Tanggal</label>
-          <input type="date" class="form-control" name="tgl">
+      <form method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Nomor Surat</label>
+            <input type="text" class="form-control" name="no_surat" placeholder="Nomor Surat">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Tanggal Surat</label>
+            <input type="date" class="form-control" name="tanggal_surat">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Asal Surat</label>
+            <input type="text" class="form-control" name="asal_surat" placeholder="Asal Surat">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Tanggal Kegiatan</label>
+            <input type="date" class="form-control" name="tgl">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Jam</label>
+            <input class="form-control" name="jam" placeholder="Tulis Jam">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Tempat</label>
+            <input class="form-control" name="tempat" placeholder="Tempat Kegiatan">
+          </div>
         </div>
         <div class="form-group">
-          <label >Jam</label>
-          <input class="form-control" name="jam" placeholder="Tulis Jam">
+          <label>Acara</label>
+          <textarea name="acara" class="form-control" rows="5" placeholder="Masukkan Acara / Kegiatan" required></textarea>
         </div>
-        <div class="form-group">
-          <label >Acara</label>
-          <input class="form-control" name="acara" placeholder="Masukkan Acara / Kegiatan">
-        </div>
-        <div class="form-group">
-          <label>Tempat</label>
-          <input class="form-control" name="tempat" placeholder="Tempat">
-        </div>
-        <label>Disposisi :</label><hr class="mt-2">
+        <label>Disposisi :</label>
+        <hr class="mt-2">
         <div class="row">
           <div class="col-6">
             <div class="form-check">
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Camat">Camat <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Sekcam">Sekcam <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasi Permas">Kasi Permas <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasi Tapem">Kasi Tapem <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasi Kesra">Kasi Kesra <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasi Trantib">Kasi Trantib <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasubag Prog & Keu">Kasubag Prog & Keu <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Kasubag Umpeg">Kasubag Umpeg <br>
-              <input type="checkbox" name="dispo[]" class="form-check-input" value="Hartini">Hartini <br>
+              <?php
+              $pegawai = $conn->query("SELECT * FROM tb_pegawai");
+              if (mysqli_num_rows($pegawai) > 0) {
+                $count = 2;
+                while ($dataPeg = $pegawai->fetch_assoc()) {
+                  $nama_pegawai = $dataPeg['nama_pegawai'];
+                  $count = $count + 1;
+                  if (($count % 2) == 1) {
+              ?>
+                    <label><input type="checkbox" name="dispo[]" class="form-check-input" value="<?= $nama_pegawai; ?>"> <?= $nama_pegawai; ?></label> <br>
+              <?php
+                  }
+                }
+              }
+              ?>
             </div>
           </div>
           <div class="col-6">
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Nur Fatoni">Nur Fatoni <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Tri Murtopo">Tri Murtopo <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Sukahar">Sukahar <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="M. Ahsanu Amala">M. Ahsanu Amala <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Arissatur Rohman">Arissatur Rohman <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Koirul Umam">Koirul Umam <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Adi Setiyo Baskoro">Adi Setiyo Baskoro <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Lisnawati">Lisnawati <br>
-            <input type="checkbox" name="dispo[]" class="form-check-input" value="Al Qomariyah">Al Qomariyah <br>
+            <div class="form-check">
+              <?php
+              $pegawai = $conn->query("SELECT * FROM tb_pegawai");
+              if (mysqli_num_rows($pegawai) > 0) {
+                $count = 2;
+                while ($dataPeg = $pegawai->fetch_assoc()) {
+                  $nama_pegawai = $dataPeg['nama_pegawai'];
+                  $count = $count + 1;
+                  if (($count % 2) == 0) {
+              ?>
+                    <label><input type="checkbox" name="dispo[]" class="form-check-input" value="<?= $nama_pegawai; ?>"> <?= $nama_pegawai; ?></label> <br>
+              <?php
+                  }
+                }
+              }
+              ?>
+            </div>
           </div>
         </div>
         <br>
@@ -66,26 +97,34 @@ $tgl = $_POST['tgl'];
 $jam = $_POST['jam'];
 $acara = $_POST['acara'];
 $tempat = $_POST['tempat'];
+$tanggal_surat = $_POST['tanggal_surat'];
+$asal_surat = $_POST['asal_surat'];
 $dispo = implode($_POST['dispo'], ', ');
+$no_surat = $_POST['no_surat'];
+$tahun = date("Y");
 
 $simpan = $_POST['simpan'];
 
 if ($simpan) {
-  $sql = $conn->query("INSERT into tb_agenda (tgl, jam, acara, tempat, dispo)
+  $sql = $conn->query("INSERT into tb_agenda (tgl, jam, acara, tempat, dispo, no_surat, asal_surat, tanggal_surat, tahun)
                       values('$tgl',
                               '$jam',
                               '$acara',
                               '$tempat',
-                              '$dispo'
+                              '$dispo',
+			      '$no_surat',
+			      '$asal_surat',
+			      '$tanggal_surat',
+			      '$tahun'
                             )");
-    if ($sql) {
-      ?>
-      <script type="text/javascript">
-        alert("Agenda berhasil ditambahkan..!");
-        window.location.href="?page=agenda";
-      </script>
-      <?php
-    }
+  if ($sql) {
+?>
+    <script type="text/javascript">
+      alert("Agenda berhasil ditambahkan..!");
+      window.location.href = "?page=agenda";
+    </script>
+<?php
+  }
 }
 
- ?>
+?>

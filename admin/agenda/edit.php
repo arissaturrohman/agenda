@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if(!isset($_SESSION["login"])){
+if (!isset($_SESSION["login"])) {
   header("Location: login.php");
   exit;
 }
@@ -11,7 +11,7 @@ $sql = $conn->query("SELECT * FROM tb_agenda where id='$id'");
 $result = $sql->fetch_assoc();
 // $dispo = $result['dispo'];
 $ceklist = explode(', ', $result['dispo']);
- ?>
+?>
 
 <div class="container-fluid">
 
@@ -21,55 +21,107 @@ $ceklist = explode(', ', $result['dispo']);
   <!-- DataTales Example -->
   <div class="card shadow">
     <div class="card-body">
-      <form method="POST" >
-        <div class="form-group">
-          <label >Tanggal</label>
-          <input type="date" class="form-control" name="tgl" value="<?php echo $result['tgl']; ?>">
+      <form method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Nomor Surat</label>
+            <input type="text" class="form-control" name="no_surat" value="<?php echo $result['no_surat']; ?>" placeholder="Nomor Surat">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Tanggal Surat</label>
+            <input type="date" class="form-control" name="tanggal_surat" value="<?php echo $result['tanggal_surat']; ?>">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Asal Surat</label>
+            <input type="text" class="form-control" name="asal_surat" value="<?php echo $result['asal_surat']; ?>" placeholder="Asal Surat">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Tanggal Kegiatan</label>
+            <input type="date" class="form-control" name="tgl" value="<?php echo $result['tgl']; ?>">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Jam</label>
+            <input class="form-control" name="jam" value="<?php echo $result['jam']; ?>" placeholder="Tulis Jam">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Tempat</label>
+            <input class="form-control" name="tempat" value="<?php echo $result['tempat']; ?>" placeholder="Tempat">
+          </div>
         </div>
         <div class="form-group">
-          <label >Jam</label>
-          <input class="form-control" name="jam" value="<?php echo $result['jam']; ?>" placeholder="Tulis Jam">
+          <label>Acara</label>
+          <textarea name="acara" class="form-control" rows="5" placeholder="Masukkan Acara / Kegiatan" required><?php echo $result['acara']; ?></textarea>
         </div>
-        <div class="form-group">
-          <label >Acara</label>
-          <input class="form-control" name="acara" value="<?php echo $result['acara']; ?>" placeholder="Masukkan Acara / Kegiatan">
-        </div>
-        <div class="form-group">
-          <label>Tempat</label>
-          <input class="form-control" name="tempat" value="<?php echo $result['tempat']; ?>" placeholder="Tempat">
-        </div>
-          <label>Disposisi :</label>
+        <label>Disposisi :</label>
         <div class="row">
-
           <div class="col-6">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Camat" <?php in_array ('Camat', $ceklist) ? print "checked" : ""; ?> > Camat<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Sekcam" <?php in_array ('Sekcam', $ceklist) ? print "checked" : ""; ?> > Sekcam<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasi Permas" <?php in_array ('Kasi Permas', $ceklist) ? print "checked" : ""; ?> > Kasi Permas<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasi Tapem" <?php in_array ('Kasi Tapem', $ceklist) ? print "checked" : ""; ?> > Kasi Tapem<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasi Kesra" <?php in_array ('Kasi Kesra', $ceklist) ? print "checked" : ""; ?> > Kasi Kesra<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasi Trantib" <?php in_array ('Kasi Trantib', $ceklist) ? print "checked" : ""; ?> > Kasi Trantib<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasubag Prog & Keu" <?php in_array ('Kasubag Prog & Keu', $ceklist) ? print "checked" : ""; ?> > Kasubag Prog & Keu<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Kasubag Umpeg" <?php in_array ('Kasubag Umpeg', $ceklist) ? print "checked" : ""; ?> > Kasubag Umpeg<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Hartini" <?php in_array ('Hartini', $ceklist) ? print "checked" : ""; ?> > Hartini<br>
+              <?php
+              $sqlPeg = $conn->query("SELECT * FROM tb_pegawai");
+              if (mysqli_num_rows($sqlPeg) > 0) {
+                $count = 2;
+                while ($dataPeg = $sqlPeg->fetch_assoc()) {
+                  $nmPeg = $dataPeg['nama_pegawai'];
+                  $count = $count + 1;
+                  if (($count % 2) == 1) {
+                    $nama = array(
+                      'nama' => $dataPeg['nama_pegawai']
+                    );
+                    foreach ($nama as $value) {
+                      if (in_array($value, $ceklist)) {
+                        $cek = "checked";
+                      } else {
+                        $cek = "";
+                      }
+              ?>
+
+                      <label><input type="checkbox" <?= $cek; ?> class="form-check-input" name="dispo[]" value="<?= $nmPeg; ?>" /> <?= $nmPeg; ?></label><br>
+              <?php
+                    }
+                  }
+                }
+              }
+              ?>
+
             </div>
           </div>
           <div class="col-6">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Nur Fatoni" <?php in_array ('Nur Fatoni', $ceklist) ? print "checked" : ""; ?> > Nur Fatoni<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Tri Murtopo" <?php in_array ('Tri Murtopo', $ceklist) ? print "checked" : ""; ?> > Tri Murtopo<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Sukahar" <?php in_array ('Sukahar', $ceklist) ? print "checked" : ""; ?> > Sukahar<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="M. Ahsanu Amala" <?php in_array ('M. Ahsanu Amala', $ceklist) ? print "checked" : ""; ?> > M. Ahsanu Amala<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Arissatur Rohman" <?php in_array ('Arissatur Rohman', $ceklist) ? print "checked" : ""; ?> > Arissatur Rohman<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Koirul Umam" <?php in_array ('Koirul Umam', $ceklist) ? print "checked" : ""; ?> > Koirul Umam<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Adi Setiyo Baskoro" <?php in_array ('Adi Setiyo Baskoro', $ceklist) ? print "checked" : ""; ?> > Adi Setiyo Baskoro<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Lisnawati" <?php in_array ('Lisnawati', $ceklist) ? print "checked" : ""; ?> > Lisnawati<br>
-              <input type="checkbox" class="form-check-input" name="dispo[]" value="Al Qomariyah" <?php in_array ('Al Qomariyah', $ceklist) ? print "checked" : ""; ?> > Al Qomariyah<br>
+
+              <?php
+              $sqlPeg = $conn->query("SELECT * FROM tb_pegawai");
+              if (mysqli_num_rows($sqlPeg) > 0) {
+                $count = 2;
+                while ($dataPeg = $sqlPeg->fetch_assoc()) {
+                  $nmPeg = $dataPeg['nama_pegawai'];
+                  $count = $count + 1;
+                  if (($count % 2) == 0) {
+                    $nama = array(
+                      'nama' => $dataPeg['nama_pegawai']
+                    );
+                    foreach ($nama as $value) {
+                      if (in_array($value, $ceklist)) {
+                        $cek = "checked";
+                      } else {
+                        $cek = "";
+                      }
+              ?>
+
+                      <label><input type="checkbox" <?= $cek; ?> class="form-check-input" name="dispo[]" value="<?= $nmPeg; ?>" /> <?= $nmPeg; ?></label><br>
+              <?php
+                    }
+                  }
+                }
+              }
+              ?>
+
             </div>
           </div>
         </div>
         <br>
-        <input type="submit" class="btn btn-success" name="simpan" value="Update">
+        <input type="submit" class="btn btn-sm btn-success" name="simpan" value="Update">
         <a href="?page=agenda" class="btn btn-secondary">Batal</a>
       </form>
 
@@ -85,20 +137,24 @@ $tgl = $_POST['tgl'];
 $jam = $_POST['jam'];
 $acara = $_POST['acara'];
 $tempat = $_POST['tempat'];
+$tanggal_surat = $_POST['tanggal_surat'];
+$asal_surat = $_POST['asal_surat'];
 $dispo = implode(', ', $_POST['dispo']);
+$no_surat = $_POST['no_surat'];
+$tahun = date('Y');
 
 $simpan = $_POST['simpan'];
 
 if ($simpan) {
-  $sql = $conn->query("UPDATE tb_agenda set tgl='$tgl', jam='$jam', acara='$acara', tempat='$tempat', dispo='$dispo' where id='$id'");
-    if ($sql) {
-      ?>
-      <script type="text/javascript">
-        alert("Agenda berhasil diubah..!");
-        window.location.href="?page=agenda";
-      </script>
-      <?php
-    }
+  $sql = $conn->query("UPDATE tb_agenda set tgl='$tgl', jam='$jam', acara='$acara', tempat='$tempat', dispo='$dispo', no_surat='$no_surat', asal_surat='$asal_surat', tanggal_surat='$tanggal_surat', tahun='$tahun' where id='$id'");
+  if ($sql) {
+?>
+    <script type="text/javascript">
+      alert("Agenda berhasil diubah..!");
+      window.location.href = "?page=agenda";
+    </script>
+<?php
+  }
 }
 
- ?>
+?>
